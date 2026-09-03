@@ -1,6 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
   Network,
@@ -16,18 +18,20 @@ import {
 } from "lucide-react";
 
 const NAV_ITEMS = [
-  { icon: LayoutDashboard, label: "Overview", active: true },
-  { icon: Network,         label: "Network Graph" },
-  { icon: Bell,            label: "Alerts",        badge: 12 },
-  { icon: ArrowLeftRight,  label: "Transactions" },
-  { icon: Bookmark,        label: "Watchlist" },
-  { icon: BrainCircuit,    label: "AI Insights" },
-  { icon: FileText,        label: "Reports" },
-  { icon: FolderKanban,    label: "Case Management" },
-  { icon: Settings,        label: "Settings" },
+  { icon: LayoutDashboard, label: "Overview",        href: "/" },
+  { icon: Network,         label: "Network Graph",   href: "/network" },
+  { icon: Bell,            label: "Alerts",          href: "/alerts", badge: 12 },
+  { icon: ArrowLeftRight,  label: "Transactions",    href: "/transactions" },
+  { icon: Bookmark,        label: "Watchlist",       href: "/watchlist" },
+  { icon: BrainCircuit,    label: "AI Insights",     href: "/ai-insights" },
+  { icon: FileText,        label: "Reports",         href: "/reports" },
+  { icon: FolderKanban,    label: "Case Management", href: "/cases" },
+  { icon: Settings,        label: "Settings",        href: "/settings" },
 ];
 
 export default function Sidebar() {
+  const pathname = usePathname();
+
   return (
     <aside
       className="flex flex-col w-56 flex-shrink-0 border-r border-slate-800/60 h-screen sticky top-0"
@@ -69,37 +73,41 @@ export default function Sidebar() {
 
       {/* Nav */}
       <nav className="flex-1 py-3 px-2 overflow-y-auto space-y-0.5">
-        {NAV_ITEMS.map(({ icon: Icon, label, active, badge }) => (
-          <motion.button
-            key={label}
-            whileHover={{ x: 2 }}
-            transition={{ duration: 0.12 }}
-            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-left group relative"
-            style={{
-              background: active ? "rgba(0,245,255,0.08)" : "transparent",
-              color: active ? "#00F5FF" : "#64748b",
-              border: active ? "1px solid rgba(0,245,255,0.15)" : "1px solid transparent",
-            }}
-          >
-            {active && (
+        {NAV_ITEMS.map(({ icon: Icon, label, href, badge }) => {
+          const active = pathname === href;
+          return (
+            <Link key={label} href={href}>
               <motion.div
-                layoutId="nav-indicator"
-                className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 rounded-full"
-                style={{ background: "#00F5FF", boxShadow: "0 0 6px #00F5FF" }}
-              />
-            )}
-            <Icon size={15} />
-            <span className="flex-1">{label}</span>
-            {badge && (
-              <span
-                className="text-[10px] font-bold px-1.5 py-0.5 rounded-full"
-                style={{ background: "#DC143C", color: "#fff" }}
+                whileHover={{ x: 2 }}
+                transition={{ duration: 0.12 }}
+                className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-left group relative cursor-pointer mb-0.5"
+                style={{
+                  background: active ? "rgba(0,245,255,0.08)" : "transparent",
+                  color: active ? "#00F5FF" : "#64748b",
+                  border: active ? "1px solid rgba(0,245,255,0.15)" : "1px solid transparent",
+                }}
               >
-                {badge}
-              </span>
-            )}
-          </motion.button>
-        ))}
+                {active && (
+                  <motion.div
+                    layoutId="nav-indicator"
+                    className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 rounded-full"
+                    style={{ background: "#00F5FF", boxShadow: "0 0 6px #00F5FF" }}
+                  />
+                )}
+                <Icon size={15} />
+                <span className="flex-1">{label}</span>
+                {badge && (
+                  <span
+                    className="text-[10px] font-bold px-1.5 py-0.5 rounded-full"
+                    style={{ background: "#DC143C", color: "#fff" }}
+                  >
+                    {badge}
+                  </span>
+                )}
+              </motion.div>
+            </Link>
+          );
+        })}
       </nav>
 
       {/* User */}
