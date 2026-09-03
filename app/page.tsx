@@ -146,9 +146,6 @@ export default function Home() {
                     <button className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[10px] font-medium text-slate-400 border border-slate-800 hover:border-slate-600 transition-colors">
                       <Globe2 size={11} /> Layout
                     </button>
-                    <button className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[10px] font-medium text-slate-400 border border-slate-800 hover:border-slate-600 transition-colors">
-                      <Zap size={11} /> Simulate
-                    </button>
                   </div>
                 </div>
 
