@@ -261,3 +261,4 @@ function TelemetryCard({
     </div>
   );
 }
+
