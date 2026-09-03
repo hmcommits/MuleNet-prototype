@@ -222,7 +222,7 @@ function SectionHeader({
   icon: Icon,
   title,
 }: {
-  icon: React.ElementType;
+  icon: React.FC<{ size?: number; className?: string }>;
   title: string;
 }) {
   return (
@@ -242,7 +242,7 @@ function TelemetryCard({
 }: {
   label: string;
   value: string;
-  icon: React.ElementType;
+  icon: React.FC<{ size?: number; className?: string }>;
   highlight?: boolean;
 }) {
   return (
@@ -261,4 +261,3 @@ function TelemetryCard({
     </div>
   );
 }
-
